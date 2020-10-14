@@ -8,10 +8,10 @@ public class IpEntity {
 
   public IpEntity(String value) {
       String[] values = value.split("\\|");
-      this.country = values[0];
-      this.province = values[2];
-      this.city = values[3];
-      this.operators = values[4];
+      this.country = values[1];
+      this.province = values[3];
+      this.city = values[4];
+      this.operators = values[5];
   }
 
   public String getCity() {
