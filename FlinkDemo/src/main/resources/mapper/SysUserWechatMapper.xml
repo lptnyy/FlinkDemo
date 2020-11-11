@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fasterar.smart.server.flink.mapper.SysUserWechatMapper">
+
+    <select id="getUserId" resultType="java.util.Map">
+        select cu.id userId,
+        cu.name userName,
+        cui.company_id companyId
+        from kc_catalog.sys_user_wechat suw
+        left join kc_catalog.company_user cu
+        on suw.mobile = cu.username
+        left join kc_catalog.company_user_info cui
+        on cu.id = cui.id
+        where suw.id = #{wxId}
+    </select>
+
+    <select id="getSysUserWechat" resultType="com.fasterar.smart.server.flink.entity.SysUserWechat">
+        SELECT * FROM kc_catalog.sys_user_wechat suw WHERE suw.`id`=#{wxId}
+    </select>
+
+    <select id="getWxId" resultType="java.lang.Long">
+        SELECT suw.id wxId
+        FROM kc_catalog.company_user cu
+        LEFT JOIN kc_catalog.sys_user_wechat suw
+        ON suw.mobile = cu.username
+        WHERE cu.id = #{userId}
+    </select>
+
+    <select id="getSysUserWechatList" resultType="com.fasterar.smart.server.flink.entity.SysUserWechat">
+        SELECT * FROM `kc_catalog`.`sys_user_wechat` suw
+        <where>
+            <if test="list != null and list.size()>0">
+                AND suw.id IN
+                <foreach item="item" index="index" collection="list" open="("  close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>

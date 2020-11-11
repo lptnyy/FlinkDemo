@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fasterar.smart.server.flink.mapper.ShareStatisticsOpenNumberMapper">
+
+    <select id="queryShareStatisticsOpenNumber"
+            resultType="com.fasterar.smart.server.flink.entity.ShareStatisticsOpenNumber">
+        SELECT a.`type`, a.`type_id`, b.share_open_id as oid,
+        a.user_name, a.avatar_url
+        FROM `share_statistics_open_number` a
+        LEFT JOIN `data_share_relation` b
+        ON a.`uid` = b.`share_wx_id`
+        WHERE a.`uid` = #{data.uid} AND a.type_id = #{data.typeId} AND a.type = #{data.type}  AND b.`state` =1
+    </select>
+</mapper>
